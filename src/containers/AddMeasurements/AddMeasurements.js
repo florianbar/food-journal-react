@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/actionCreators/addMeasurements';
+import * as actions from '../../store/actions/actionCreators/bodyMeasurement';
 
 import Button from '../../components/UI/Button/Button';
 
@@ -22,7 +22,7 @@ class AddMeasurements extends Component {
     formSubmitHandler = (event) => {
         event.preventDefault();
 
-        this.props.onBodyMeasurementsSubmit(
+        this.props.onBodyMeasurementSubmit(
             parseFloat(this.state.form.weight.value), 
             parseFloat(this.state.form.bodyFat.value)
         );
@@ -72,15 +72,15 @@ class AddMeasurements extends Component {
 
 const mapStateToProps = state => {
     return {
-        weight: state.measurement.weight,
-        bodyFat: state.measurement.bodyFat,
-        canAddMeasurements: state.measurement.canAddMeasurements
+        weight: state.bodyMeasurement.weight,
+        bodyFat: state.bodyMeasurement.bodyFat,
+        canAddMeasurements: state.bodyMeasurement.canAddMeasurements
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBodyMeasurementsSubmit: (weight, bodyFat) => dispatch(actions.bodyMeasurementsSubmit(weight, bodyFat))
+        onBodyMeasurementSubmit: (weight, bodyFat) => dispatch(actions.bodyMeasurementSubmit(weight, bodyFat))
     };
 };
 

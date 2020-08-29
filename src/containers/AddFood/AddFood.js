@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/actionCreators/addFood';
+import * as actions from '../../store/actions/actionCreators/food';
 
 import Button from '../../components/UI/Button/Button';
 
@@ -87,7 +87,7 @@ class AddFood extends Component {
 
 const mapStateToProps = state => {
     return {
-        canAddFood: state.meal.canAddFood
+        canAddFood: state.food.canAddFood
     };
 };
 

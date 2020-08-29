@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as addMeasurementsActions from '../../store/actions/actionCreators/addMeasurements';
-import * as addFoodActions from '../../store/actions/actionCreators/addFood';
+import * as bodyMeasurementActions from '../../store/actions/actionCreators/bodyMeasurement';
+import * as foodActions from '../../store/actions/actionCreators/food';
 
-import BodyMeasurements from '../../components/BodyMeasurements/BodyMeasurements';
+import BodyMeasurement from '../../components/BodyMeasurement/BodyMeasurement';
 import Meals from '../../components/Meals/Meals';
 
 class Day extends Component {
@@ -21,7 +21,7 @@ class Day extends Component {
     render () {
         return (
             <div>
-                <BodyMeasurements clicked={this.addMeasurementsHandler} />
+                <BodyMeasurement clicked={this.addMeasurementsHandler} />
                 <Meals clicked={this.addFoodHandler} />
             </div>
         );
@@ -30,8 +30,8 @@ class Day extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBodyMeasurementsInit: () => dispatch(addMeasurementsActions.bodyMeasurementsInit()),
-        onAddFoodInit: () => dispatch(addFoodActions.addFoodInit())
+        onBodyMeasurementsInit: () => dispatch(bodyMeasurementActions.bodyMeasurementInit()),
+        onAddFoodInit: () => dispatch(foodActions.addFoodInit())
     };
 };
 

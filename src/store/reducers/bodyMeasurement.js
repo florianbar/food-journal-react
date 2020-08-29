@@ -8,13 +8,13 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.BODY_MEASUREMENTS_INIT:
+        case actionTypes.BODY_MEASUREMENT_INIT:
             return {
                 ...state,
                 canAddMeasurements: false
             };
 
-        case actionTypes.BODY_MEASUREMENTS_SUCCESS:
+        case actionTypes.BODY_MEASUREMENT_SUCCESS:
             return {
                 ...state,
                 weight: action.weight,

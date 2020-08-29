@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Widget from '../UI/Widget/Widget';
 import Button from '../UI/Button/Button';
 
-const bodyMeasurements = (props) => {
+const bodyMeasurement = (props) => {
     return (
         <Widget title="Body Measurements">
             <Button 
@@ -23,9 +23,9 @@ const bodyMeasurements = (props) => {
 
 const mapStateToProps = state => {
     return {
-        weight: state.measurement.weight,
-        bodyFat: state.measurement.bodyFat
+        weight: state.bodyMeasurement.weight,
+        bodyFat: state.bodyMeasurement.bodyFat
     };
 };
 
-export default connect(mapStateToProps)(bodyMeasurements);
+export default connect(mapStateToProps)(bodyMeasurement);

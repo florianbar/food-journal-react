@@ -6,8 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import measurementReducer from './store/reducers/addMeasurements';
-import mealReducer from './store/reducers/addFood';
+import bodyMeasurementReducer from './store/reducers/bodyMeasurement';
+import foodReducer from './store/reducers/food';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -15,8 +15,8 @@ import * as serviceWorker from './serviceWorker';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  measurement: measurementReducer,
-  meal: mealReducer,
+  bodyMeasurement: bodyMeasurementReducer,
+  food: foodReducer,
 });
 
 const store = createStore(
