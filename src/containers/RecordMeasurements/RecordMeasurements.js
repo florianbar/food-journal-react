@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 
+import { Redirect } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/bodyMeasurements';
+
 import Button from '../../components/UI/Button/Button';
 
 class RecordMeasurements extends Component {
     state = {
         form: {
             weight: {
-                value: 71
+                value: this.props.weight
             },
             bodyFat: {
-                value: 13.3
+                value: this.props.bodyFat
             }
         }
     }
@@ -17,7 +22,10 @@ class RecordMeasurements extends Component {
     formSubmitHandler = (event) => {
         event.preventDefault();
 
-        console.log("[formSubmitHandler]", this.state.form);
+        this.props.onBodyMeasurementsSubmit(
+            parseFloat(this.state.form.weight.value), 
+            parseFloat(this.state.form.bodyFat.value)
+        );
     }
 
     inputChangedHandler = (event, inputName) => {
@@ -35,27 +43,46 @@ class RecordMeasurements extends Component {
 
     render () {
         return (
-            <form onSubmit={this.formSubmitHandler}>
-                <h1>Record Measurements</h1>
+            <React.Fragment>
+                { this.props.isRecorded ? <Redirect to="/" /> : null }
 
-                <label>Weight:</label>
-                <input 
-                    type="number" 
-                    name="weight" 
-                    value={this.state.form.weight.value}
-                    onChange={(event) => this.inputChangedHandler(event, "weight")} />
+                <form onSubmit={this.formSubmitHandler}>
+                    <h1>Record Measurements</h1>
 
-                <label>Body Fat:</label>
-                <input 
-                    type="number" 
-                    name="bodyFat" 
-                    value={this.state.form.bodyFat.value}
-                    onChange={(event) => this.inputChangedHandler(event, "bodyFat")} />
+                    <label>Weight:</label>
+                    <input 
+                        type="number" 
+                        name="weight" 
+                        value={this.state.form.weight.value}
+                        onChange={(event) => this.inputChangedHandler(event, "weight")} />
 
-                <Button btnType="Success">Submit</Button>
-            </form>
+                    <label>Body Fat:</label>
+                    <input 
+                        type="number" 
+                        name="bodyFat" 
+                        value={this.state.form.bodyFat.value}
+                        onChange={(event) => this.inputChangedHandler(event, "bodyFat")} />
+
+                    <Button btnType="Success">Submit</Button>
+                </form>
+            </React.Fragment>
         );
     }
 };
 
-export default RecordMeasurements;
+const mapStateToProps = state => {
+    return {
+        weight: state.weight,
+        bodyFat: state.bodyFat,
+        isRecorded: state.isRecorded
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onBodyMeasurementsInit: () => dispatch(actions.bodyMeasurementsInit()),
+        onBodyMeasurementsSubmit: (weight, bodyFat) => dispatch(actions.bodyMeasurementsSubmit(weight, bodyFat))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecordMeasurements);

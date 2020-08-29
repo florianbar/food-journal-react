@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import classes from './Meals.module.css';
 import Widget from '../UI/Widget/Widget';
 import Button from '../UI/Button/Button';
@@ -28,4 +30,10 @@ const meals = (props) => {
     );
 };
 
-export default meals;
+const mapStateToProps = state => {
+    return {
+        meals: state.meals
+    };
+};
+
+export default connect(mapStateToProps)(meals);

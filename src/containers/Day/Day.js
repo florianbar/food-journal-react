@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/bodyMeasurements';
+
 import BodyMeasurements from '../../components/BodyMeasurements/BodyMeasurements';
 import Meals from '../../components/Meals/Meals';
 
 class Day extends Component {
     state = {
-        measurements: {
-            weight: 71,
-            bodyFat: 13.3
-        },
         meals: {
             breakfast: ["Eggs", "Bacon"],
             morningSnack: ["Whey Protein", "Apple"],
@@ -20,6 +19,7 @@ class Day extends Component {
     };
 
     recordMeasurementsHandler = () => {
+        this.props.onBodyMeasurementsInit();
         this.props.history.push("/record-measurements");
     }
 
@@ -30,15 +30,17 @@ class Day extends Component {
     render () {
         return (
             <div>
-                <BodyMeasurements 
-                    measurements={this.state.measurements} 
-                    clicked={this.recordMeasurementsHandler} />
-                <Meals 
-                    meals={this.state.meals} 
-                    clicked={this.addFoodHandler} />
+                <BodyMeasurements clicked={this.recordMeasurementsHandler} />
+                <Meals clicked={this.addFoodHandler} />
             </div>
         );
     }
 };
 
-export default Day;
+const mapDispatchToProps = dispatch => {
+    return {
+        onBodyMeasurementsInit: () => dispatch(actions.bodyMeasurementsInit())
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Day);
