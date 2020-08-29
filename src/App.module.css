@@ -1,0 +1,11 @@
+.App {}
+
+label {
+  display: block;
+  margin: 0 0 5px;
+  font-weight: bold;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App {}
+}

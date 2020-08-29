@@ -1,0 +1,14 @@
+.Widget {
+    box-sizing: border-box;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+
+.WidgetHeader {
+    padding: 10px;
+    background-color: #eee;
+}
+
+.WidgetBody {
+    padding: 10px;
+}

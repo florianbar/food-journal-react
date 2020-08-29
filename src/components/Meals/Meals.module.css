@@ -1,0 +1,17 @@
+.Meal {
+    margin: 0 0 10px;
+}
+
+.Foods {
+    box-sizing: border-box;
+    padding: 4px 0;
+}
+
+.Food {
+    font-size: 12px;
+    box-sizing: border-box;
+    margin-right: 4px;
+    padding: 4px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
