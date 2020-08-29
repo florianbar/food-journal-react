@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+import { Redirect } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/actionCreators/addFood';
+
 import Button from '../../components/UI/Button/Button';
 
 class AddFood extends Component {
@@ -22,14 +27,10 @@ class AddFood extends Component {
         }
     }
 
-    componentDidUpdate () {
-        console.log("[componentDidUpdate]", this.state.form);
-    }
-
     formSubmitHandler = (event) => {
         event.preventDefault();
 
-        console.log("[formSubmitHandler]", this.state.form);
+        this.props.onAddFoodSubmit(this.state.form.mealType.value, this.state.form.food.value);
     }
 
     inputChangedHandler = (event, inputName) => {
@@ -58,26 +59,42 @@ class AddFood extends Component {
         });
 
         return (
-            <form onSubmit={this.formSubmitHandler}>
-                <h1>Add Food</h1>
+            <React.Fragment>
+                { this.props.canAddFood ? <Redirect to="/" /> : null }
 
-                <label>Meal Type:</label>
-                <select onChange={(event) => this.inputChangedHandler(event, "mealType")}>
-                    {mealTypes}
-                </select>
+                <form onSubmit={this.formSubmitHandler}>
+                    <h1>Add Food</h1>
 
-                <label>Food Description:</label>
-                <input 
-                    type="text" 
-                    name="food" 
-                    placeholder="Chicken Stir Fry..." 
-                    value={this.state.form.food.value}
-                    onChange={(event) => this.inputChangedHandler(event, "food")} />
+                    <label>Meal Type:</label>
+                    <select onChange={(event) => this.inputChangedHandler(event, "mealType")}>
+                        {mealTypes}
+                    </select>
 
-                <Button btnType="Success">Submit</Button>
-            </form>
+                    <label>Food Description:</label>
+                    <input 
+                        type="text" 
+                        name="food" 
+                        placeholder="Chicken Stir Fry..." 
+                        value={this.state.form.food.value}
+                        onChange={(event) => this.inputChangedHandler(event, "food")} />
+
+                    <Button btnType="Success">Submit</Button>
+                </form>
+            </React.Fragment>
         );
     }
 };
 
-export default AddFood;
+const mapStateToProps = state => {
+    return {
+        canAddFood: state.meal.canAddFood
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddFoodSubmit: (mealType, foodDescription) => dispatch(actions.addFoodSuccess(mealType, foodDescription))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddFood);

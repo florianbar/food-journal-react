@@ -32,7 +32,7 @@ const meals = (props) => {
 
 const mapStateToProps = state => {
     return {
-        meals: state.meals
+        meals: state.meal.meals
     };
 };
 

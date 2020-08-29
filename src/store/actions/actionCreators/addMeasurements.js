@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from '../actionTypes';
 
 export const bodyMeasurementsInit = () => {
     return {
@@ -8,7 +8,7 @@ export const bodyMeasurementsInit = () => {
 
 export const bodyMeasurementsSubmit = (weight, bodyFat) => {
     return {
-        type: actionTypes.BODY_MEASUREMENTS_SUBMIT,
+        type: actionTypes.BODY_MEASUREMENTS_SUCCESS,
         weight: weight,
         bodyFat: bodyFat
     };

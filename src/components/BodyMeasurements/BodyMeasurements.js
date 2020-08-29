@@ -12,10 +12,10 @@ const bodyMeasurements = (props) => {
                 btnType="Success"
                 clicked={props.clicked}>Record Measurements</Button>
             <p>
-            <b>Weight: {props.weight}kg</b>
+                <b>Weight:</b> {props.weight}kg
             </p>
             <p>
-                <b>Body Fat: {props.bodyFat}%</b>
+                <b>Body Fat:</b> {props.bodyFat}%
             </p>
         </Widget>
     );
@@ -23,8 +23,8 @@ const bodyMeasurements = (props) => {
 
 const mapStateToProps = state => {
     return {
-        weight: state.weight,
-        bodyFat: state.bodyFat
+        weight: state.measurement.weight,
+        bodyFat: state.measurement.bodyFat
     };
 };
 

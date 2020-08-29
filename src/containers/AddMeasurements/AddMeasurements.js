@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/bodyMeasurements';
+import * as actions from '../../store/actions/actionCreators/addMeasurements';
 
 import Button from '../../components/UI/Button/Button';
 
-class RecordMeasurements extends Component {
+class AddMeasurements extends Component {
     state = {
         form: {
             weight: {
@@ -44,10 +44,10 @@ class RecordMeasurements extends Component {
     render () {
         return (
             <React.Fragment>
-                { this.props.isRecorded ? <Redirect to="/" /> : null }
+                { this.props.canAddMeasurements ? <Redirect to="/" /> : null }
 
                 <form onSubmit={this.formSubmitHandler}>
-                    <h1>Record Measurements</h1>
+                    <h1>Add Measurements</h1>
 
                     <label>Weight:</label>
                     <input 
@@ -72,17 +72,16 @@ class RecordMeasurements extends Component {
 
 const mapStateToProps = state => {
     return {
-        weight: state.weight,
-        bodyFat: state.bodyFat,
-        isRecorded: state.isRecorded
+        weight: state.measurement.weight,
+        bodyFat: state.measurement.bodyFat,
+        canAddMeasurements: state.measurement.canAddMeasurements
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBodyMeasurementsInit: () => dispatch(actions.bodyMeasurementsInit()),
         onBodyMeasurementsSubmit: (weight, bodyFat) => dispatch(actions.bodyMeasurementsSubmit(weight, bodyFat))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecordMeasurements);
+export default connect(mapStateToProps, mapDispatchToProps)(AddMeasurements);
