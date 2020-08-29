@@ -1,11 +1,14 @@
 import React from 'react';
 
 import Widget from '../UI/Widget/Widget';
+import Button from '../UI/Button/Button';
 
 const bodyMeasurements = (props) => {
     return (
         <Widget title="Body Measurements">
-            <button>Record Measurements</button>
+            <Button 
+                btnType="Success"
+                clicked={props.clicked}>Record Measurements</Button>
             <p>
             <b>Weight: {props.measurements.weight}kg</b>
             </p>

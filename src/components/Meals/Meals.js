@@ -2,6 +2,7 @@ import React from 'react';
 
 import classes from './Meals.module.css';
 import Widget from '../UI/Widget/Widget';
+import Button from '../UI/Button/Button';
 
 const meals = (props) => {
     const meals = Object.keys(props.meals).map(meal => {
@@ -19,7 +20,9 @@ const meals = (props) => {
 
     return (
         <Widget title="Today's Meals">
-            <button>Add Food</button>
+            <Button 
+                btnType="Success" 
+                clicked={props.clicked}>Add Food</Button>
             {meals}
         </Widget>
     );

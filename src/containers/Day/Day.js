@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import BodyMeasurements from '../../components/BodyMeasurements/BodyMeasurements';
 import Meals from '../../components/Meals/Meals';
 
-class Home extends Component {
+class Day extends Component {
     state = {
         measurements: {
             weight: 71,
@@ -19,14 +19,26 @@ class Home extends Component {
         }
     };
 
+    recordMeasurementsHandler = () => {
+        this.props.history.push("/record-measurements");
+    }
+
+    addFoodHandler = () => {
+        this.props.history.push("/add-food");
+    }
+
     render () {
         return (
             <div>
-                <BodyMeasurements measurements={this.state.measurements} />
-                <Meals meals={this.state.meals} />
+                <BodyMeasurements 
+                    measurements={this.state.measurements} 
+                    clicked={this.recordMeasurementsHandler} />
+                <Meals 
+                    meals={this.state.meals} 
+                    clicked={this.addFoodHandler} />
             </div>
         );
     }
 };
 
-export default Home;
+export default Day;
