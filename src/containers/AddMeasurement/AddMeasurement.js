@@ -11,11 +11,28 @@ class AddMeasurement extends Component {
     state = {
         form: {
             weight: {
-                value: this.props.weight
+                value: 0
             },
             bodyFat: {
-                value: this.props.bodyFat
+                value: 0
             }
+        }
+    }
+
+    componentDidMount () {
+        const today = new Date();
+        const dateStamp = today.toDateString();
+        if (this.props.measurements && this.props.measurements[dateStamp]) {
+            this.setState({
+                form: {
+                    weight: {
+                        value: this.props.measurements[dateStamp].weight
+                    },
+                    bodyFat: {
+                        value: this.props.measurements[dateStamp].bodyFat
+                    }
+                }
+            });
         }
     }
 
@@ -44,10 +61,12 @@ class AddMeasurement extends Component {
     }
 
     render () {
-        return (
-            <React.Fragment>
-                { this.props.canAddMeasurements ? <Redirect to="/" /> : null }
-
+        let form = <Redirect to="/" />;
+        
+        const today = new Date();
+        const dateStamp = today.toDateString();
+        if (this.props.measurements && this.props.measurements[dateStamp]) {
+            form = (
                 <form onSubmit={this.formSubmitHandler}>
                     <h1>Add Measurements</h1>
 
@@ -67,17 +86,21 @@ class AddMeasurement extends Component {
 
                     <Button btnType="Success">Submit</Button>
                 </form>
+            );
+        }
+
+        return (
+            <React.Fragment>
+                { this.props.canAddMeasurements ? <Redirect to="/" /> : null }
+                {form}
             </React.Fragment>
         );
     }
 };
 
 const mapStateToProps = state => {
-    const today = new Date();
-    const dateStamp = today.toDateString();
     return {
-        weight: state.bodyMeasurement.measurements[dateStamp].weight,
-        bodyFat: state.bodyMeasurement.measurements[dateStamp].bodyFat,
+        measurements: state.bodyMeasurement.measurements,
         canAddMeasurements: state.bodyMeasurement.canAddMeasurements
     };
 };
