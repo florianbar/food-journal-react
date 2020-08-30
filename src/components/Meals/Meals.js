@@ -15,7 +15,8 @@ const meals = (props) => {
         return (
             <div className={classes.Meal}>
                 <label>{meal}:</label>
-                <div className={classes.Foods}>{mealFoods}</div>
+                <span className={classes.Foods}>{mealFoods}</span>
+                Add
             </div>
         );
     });

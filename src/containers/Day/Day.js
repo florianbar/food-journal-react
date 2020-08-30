@@ -10,7 +10,7 @@ import Meals from '../../components/Meals/Meals';
 class Day extends Component {
     addMeasurementsHandler = () => {
         this.props.onBodyMeasurementsInit();
-        this.props.history.push("/add-measurements");
+        this.props.history.push("/add-measurement");
     }
 
     addFoodHandler = () => {

@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     meals: {
-        breakfast: ["Eggs",],
+        breakfast: ["Eggs"],
         morningSnack: ["Whey Protein"],
         lunch: ["Tuna"],
         afternoonSnack: ["Whey Protein"],

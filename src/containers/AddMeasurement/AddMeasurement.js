@@ -7,7 +7,7 @@ import * as actions from '../../store/actions/actionCreators/bodyMeasurement';
 
 import Button from '../../components/UI/Button/Button';
 
-class AddMeasurements extends Component {
+class AddMeasurement extends Component {
     state = {
         form: {
             weight: {
@@ -22,10 +22,12 @@ class AddMeasurements extends Component {
     formSubmitHandler = (event) => {
         event.preventDefault();
 
-        this.props.onBodyMeasurementSubmit(
-            parseFloat(this.state.form.weight.value), 
-            parseFloat(this.state.form.bodyFat.value)
-        );
+        const data = {
+            weight: parseFloat(this.state.form.weight.value),
+            bodyFat: parseFloat(this.state.form.bodyFat.value)
+        };
+
+        this.props.onBodyMeasurementSubmit(data);
     }
 
     inputChangedHandler = (event, inputName) => {
@@ -71,17 +73,19 @@ class AddMeasurements extends Component {
 };
 
 const mapStateToProps = state => {
+    const today = new Date();
+    const dateStamp = today.toDateString();
     return {
-        weight: state.bodyMeasurement.weight,
-        bodyFat: state.bodyMeasurement.bodyFat,
+        weight: state.bodyMeasurement.measurements[dateStamp].weight,
+        bodyFat: state.bodyMeasurement.measurements[dateStamp].bodyFat,
         canAddMeasurements: state.bodyMeasurement.canAddMeasurements
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBodyMeasurementSubmit: (weight, bodyFat) => dispatch(actions.bodyMeasurementSubmit(weight, bodyFat))
+        onBodyMeasurementSubmit: (data) => dispatch(actions.bodyMeasurementSubmit(data))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMeasurements);
+export default connect(mapStateToProps, mapDispatchToProps)(AddMeasurement);
