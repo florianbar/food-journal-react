@@ -1,40 +1,64 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import * as foodActions from '../../store/actions/actionCreators/food';
 
 import classes from './Meals.module.css';
 import Widget from '../UI/Widget/Widget';
 import Button from '../UI/Button/Button';
 
-const meals = (props) => {
-    const meals = Object.keys(props.meals).map(meal => {
-        const mealFoods = props.meals[meal].map(food => {
-            return <span className={classes.Food}>{food}</span>;
-        });
+class Meals extends Component {
+    componentDidMount () {
+        this.props.onFetchFoods();
+    }
+
+    render () {
+        let widgetContent = <div>Loading...</div>;
+
+        if (this.props.foods && this.props.foods[this.props.dateStamp]) {
+            const foods = this.props.foods[this.props.dateStamp];
+            const meals = Object.keys(foods).map(meal => {
+                const mealFoods = foods[meal].map(food => {
+                    return <span className={classes.Food}>{food}</span>;
+                });
+    
+                return (
+                    <div className={classes.Meal}>
+                        <label>{meal}:</label>
+                        <span className={classes.Foods}>{mealFoods}</span>
+                    </div>
+                );
+            });
+
+            widgetContent = (
+                <div>
+                    <Button 
+                        btnType="Success" 
+                        clicked={this.props.clicked}>Add Food</Button>
+                    {meals}
+                </div>
+            );
+        }
 
         return (
-            <div className={classes.Meal}>
-                <label>{meal}:</label>
-                <span className={classes.Foods}>{mealFoods}</span>
-                Add
-            </div>
+            <Widget title="Today's Meals">
+                {widgetContent}
+            </Widget>
         );
-    });
-
-    return (
-        <Widget title="Today's Meals">
-            <Button 
-                btnType="Success" 
-                clicked={props.clicked}>Add Food</Button>
-            {meals}
-        </Widget>
-    );
+    }
 };
 
 const mapStateToProps = state => {
     return {
-        meals: state.food.meals
+        dateStamp: state.day.todayDateStamp,
+        foods: state.food.foods
     };
 };
 
-export default connect(mapStateToProps)(meals);
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchFoods: () => dispatch(foodActions.fetchFoods())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Meals);

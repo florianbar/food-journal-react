@@ -20,16 +20,14 @@ class AddMeasurement extends Component {
     }
 
     componentDidMount () {
-        const today = new Date();
-        const dateStamp = today.toDateString();
-        if (this.props.measurements && this.props.measurements[dateStamp]) {
+        if (this.props.measurements && this.props.measurements[this.props.dateStamp]) {
             this.setState({
                 form: {
                     weight: {
-                        value: this.props.measurements[dateStamp].weight
+                        value: this.props.measurements[this.props.dateStamp].weight
                     },
                     bodyFat: {
-                        value: this.props.measurements[dateStamp].bodyFat
+                        value: this.props.measurements[this.props.dateStamp].bodyFat
                     }
                 }
             });
@@ -44,7 +42,7 @@ class AddMeasurement extends Component {
             bodyFat: parseFloat(this.state.form.bodyFat.value)
         };
 
-        this.props.onBodyMeasurementSubmit(data);
+        this.props.onBodyMeasurementSubmit(this.props.dateStamp, data);
     }
 
     inputChangedHandler = (event, inputName) => {
@@ -63,9 +61,7 @@ class AddMeasurement extends Component {
     render () {
         let form = <Redirect to="/" />;
         
-        const today = new Date();
-        const dateStamp = today.toDateString();
-        if (this.props.measurements && this.props.measurements[dateStamp]) {
+        if (this.props.measurements && this.props.measurements[this.props.dateStamp]) {
             form = (
                 <form onSubmit={this.formSubmitHandler}>
                     <h1>Add Measurements</h1>
@@ -100,6 +96,7 @@ class AddMeasurement extends Component {
 
 const mapStateToProps = state => {
     return {
+        dateStamp: state.day.todayDateStamp,
         measurements: state.bodyMeasurement.measurements,
         canAddMeasurements: state.bodyMeasurement.canAddMeasurements
     };
@@ -107,7 +104,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBodyMeasurementSubmit: (data) => dispatch(actions.bodyMeasurementSubmit(data))
+        onBodyMeasurementSubmit: (id, data) => dispatch(actions.bodyMeasurementSubmit(id, data))
     };
 };
 

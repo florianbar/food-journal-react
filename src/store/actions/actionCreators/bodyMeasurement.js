@@ -1,19 +1,20 @@
 import * as actionTypes from '../actionTypes';
 import axios from '../../../axios-food-journal';
 
-const fetchMeasurementsSuccess = (measurements) => {
+const fetchMeasurementsSuccess = (id, measurements) => {
     return {
         type: actionTypes.FETCH_MEASUREMENTS_SUCCESS,
+        id: id,
         measurements: measurements
     };
 };
 
-export const fetchMeasurements = () => {
+export const fetchMeasurements = (id) => {
     return dispatch => {
         axios.get("/measurements.json")
             .then(response => {
-                //console.log("[fetchMeasurements]", response.data);
-                dispatch(fetchMeasurementsSuccess(response.data));
+                console.log(response.data);
+                dispatch(fetchMeasurementsSuccess(id, response.data));
             })
             .catch(error => {});
     };
@@ -34,15 +35,12 @@ const bodyMeasurementSuccess = (id, data) => {
     };
 };
 
-export const bodyMeasurementSubmit = (data) => {
-    const today = new Date();
-    const dateStamp = today.toDateString();
-
+export const bodyMeasurementSubmit = (id, data) => {
     return dispatch => {
-        axios.patch("/measurements.json", { [dateStamp]: data })
+        axios.patch("/measurements.json", { [id]: data })
             .then(response => {
                 console.log(response);
-                dispatch(bodyMeasurementSuccess(dateStamp, data));
+                dispatch(bodyMeasurementSuccess(id, data));
             })
             .catch(error => {});
     };

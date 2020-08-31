@@ -8,25 +8,23 @@ import Button from '../UI/Button/Button';
 
 class BodyMeasurement extends Component {
     componentDidMount () {
-        this.props.onFetchMeasurements();
+        this.props.onFetchMeasurements(this.props.dateStamp);
     }
 
     render () {
         let widgetContent = <div>Loading...</div>;
 
-        const today = new Date();
-        const dateStamp = today.toDateString();
-        if (this.props.measurements && this.props.measurements[dateStamp]) {
+        if (this.props.measurements && this.props.measurements[this.props.dateStamp]) {
             widgetContent = (
                 <div>
                     <Button 
                         btnType="Success"
                         clicked={this.props.clicked}>Record Measurements</Button>
                     <p>
-                        <b>Weight:</b> {this.props.measurements[dateStamp].weight}kg
+                        <b>Weight:</b> {this.props.measurements[this.props.dateStamp].weight}kg
                     </p>
                     <p>
-                        <b>Body Fat:</b> {this.props.measurements[dateStamp].bodyFat}%
+                        <b>Body Fat:</b> {this.props.measurements[this.props.dateStamp].bodyFat}%
                     </p>
                 </div>
             );
@@ -42,13 +40,14 @@ class BodyMeasurement extends Component {
 
 const mapStateToProps = state => {
     return {
+        dateStamp: state.day.todayDateStamp,
         measurements: state.bodyMeasurement.measurements
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchMeasurements: () => dispatch(bodyMeasurementActions.fetchMeasurements())
+        onFetchMeasurements: (id) => dispatch(bodyMeasurementActions.fetchMeasurements(id))
     };
 };
 

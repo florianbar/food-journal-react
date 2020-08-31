@@ -14,11 +14,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_MEASUREMENTS_SUCCESS:
             const upodatedMeasurements = {...action.measurements};
-            const today = new Date();
-            const dateStamp = today.toDateString();
             // if today's measurements don't exist, create empty measurements
-            if (!upodatedMeasurements[dateStamp]) {
-                upodatedMeasurements[dateStamp] = {...initialMeasurement};
+            console.log(action.id);
+            if (!upodatedMeasurements[action.id]) {
+                upodatedMeasurements[action.id] = {...initialMeasurement};
             }
             return {
                 ...state,
