@@ -27,8 +27,6 @@ const fetchFoodsSuccess = (state, action) => {
         };
     }
 
-    console.log("[fetchFoodsSuccess]", action.foods);
-
     return {
         ...state,
         foods: action.foods
@@ -62,7 +60,6 @@ const removeFoodSuccess = (state, action) => {
     const updatedMeal = { ...updatedMeals[action.id] };
     const updatedFoods = updatedMeal[action.mealType].filter((result, index) => index !== action.foodIndex);
     updatedMeals[action.id][action.mealType] = updatedFoods;
-    console.log("[removeFoodSuccess]", updatedMeals);
     return {
         ...state,
         foods: updatedMeals

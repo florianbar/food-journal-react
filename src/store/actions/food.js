@@ -13,7 +13,6 @@ export const fetchFoods = (id) => {
     return dispatch => {
         axios.get("/foods.json")
             .then(response => {
-                console.log("[fetchFoods]", response.data);
                 dispatch(fetchFoodsSuccess(id, response.data));
             })
             .catch(error => {});
@@ -38,14 +37,10 @@ const addFoodSuccess = (id, mealType, foodDescription) => {
 
 export const addFoodSubmit = (id, mealType, foodDescription) => {
     return (dispatch, getState) => {
-        const state = getState();
-        const updatedMeals = { ...state.food.foods };
-        const updatedMeal = { ...updatedMeals[id] };
-        const updatedFoods = [ ...updatedMeal[mealType] ];
-        updatedFoods.push(foodDescription);
-        updatedMeal[mealType] = updatedFoods;
-        
-        axios.patch("/foods.json", { [id]: updatedMeal })
+        const foods = [ ...getState().food.foods[id][mealType] ];
+        foods.push(foodDescription);
+
+        axios.put(`/foods/${id}/${mealType}.json`, foods)
             .then(response => {
                 dispatch(addFoodSuccess(id, mealType, foodDescription));
             })
@@ -63,13 +58,17 @@ const removeFoodSuccess = (id, mealType, foodIndex) => {
 };
 
 export const removeFoodSubmit = (id, mealType, foodIndex) => {
-    return dispatch => {
-        axios.delete(`/foods/${id}/${mealType}/${foodIndex}.json`)
+    return (dispatch, getState) => {
+        let foods = [ ...getState().food.foods[id][mealType] ];
+        foods = foods.filter((result, index) => index !== foodIndex);
+        console.log("[removeFoodSubmit]", foods);
+
+        axios.put(`/foods/${id}/${mealType}.json`, foods)
             .then(response => {
                 dispatch(removeFoodSuccess(id, mealType, foodIndex));
             })
             .catch(error => {
                 console.log(error);
-            });        
+            });     
     };
 };
