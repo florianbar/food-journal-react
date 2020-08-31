@@ -1,6 +1,25 @@
 import * as actionTypes from '../actionTypes';
 import axios from '../../axios-food-journal';
 
+const fetchFoodsSuccess = (id, foods) => {
+    return {
+        type: actionTypes.FETCH_FOODS_SUCCESS,
+        id: id,
+        foods: foods
+    }
+};
+
+export const fetchFoods = (id) => {
+    return dispatch => {
+        axios.get("/foods.json")
+            .then(response => {
+                console.log("[fetchFoods]", response.data);
+                dispatch(fetchFoodsSuccess(id, response.data));
+            })
+            .catch(error => {});
+    };
+};
+
 export const addFoodInit = (mealType) => {
     return {
         type: actionTypes.ADD_FOOD_INIT,
@@ -34,20 +53,23 @@ export const addFoodSubmit = (id, mealType, foodDescription) => {
     };
 };
 
-const fetchFoodsSuccess = (id, foods) => {
+const removeFoodSuccess = (id, mealType, foodIndex) => {
     return {
-        type: actionTypes.FETCH_FOODS_SUCCESS,
+        type: actionTypes.REMOVE_FOOD_SUCCESS,
         id: id,
-        foods: foods
-    }
+        mealType: mealType,
+        foodIndex: foodIndex
+    };
 };
 
-export const fetchFoods = (id) => {
+export const removeFoodSubmit = (id, mealType, foodIndex) => {
     return dispatch => {
-        axios.get("/foods.json")
+        axios.delete(`/foods/${id}/${mealType}/${foodIndex}.json`)
             .then(response => {
-                dispatch(fetchFoodsSuccess(id, response.data));
+                dispatch(removeFoodSuccess(id, mealType, foodIndex));
             })
-            .catch(error => {});
+            .catch(error => {
+                console.log(error);
+            });        
     };
 };

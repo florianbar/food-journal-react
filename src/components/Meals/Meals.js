@@ -6,6 +6,7 @@ import * as foodActions from '../../store/actions/food';
 import classes from './Meals.module.css';
 import Widget from '../UI/Widget/Widget';
 import Button from '../UI/Button/Button';
+import Foods from './Foods/Foods';
 
 class Meals extends Component {
     componentDidMount () {
@@ -17,40 +18,36 @@ class Meals extends Component {
         this.props.history.push("/add-food");
     }
 
+    removeFoodHandler = (mealType, foodIndex) => {
+        this.props.onRemoveFoodSubmit(this.props.dateStamp, mealType, foodIndex);
+    }
+
     render () {
         let widgetContent = <div>Loading...</div>;
 
         if (this.props.foods && this.props.foods[this.props.dateStamp]) {
             const foods = this.props.foods[this.props.dateStamp];
-            const meals = Object.keys(foods).map(mealType => {
-                const mealFoods = foods[mealType].map((food, index) => {
-                    return (
-                        <span 
-                            key={index} 
-                            className={classes.Food}>{food}</span>
-                    );
-                });
-    
+            const meals = Object.keys(foods).map(meal => {
                 return (
-                    <div key={mealType} className={classes.Meal}>
-                        <label>{mealType}:</label>
-                        <span className={classes.Foods}>{mealFoods}</span>
-                        <Button 
-                            btntype="Success" 
-                            btnsize="sm" 
-                            style={{display: "inline-block"}}
-                            clicked={() => this.addFoodHandler(mealType)}>+ Add</Button>
+                    <div key={meal} className={classes.Meal}>
+                        <label>{meal}:</label>
+                        <Foods 
+                            meal={meal} 
+                            foods={foods[meal]} 
+                            addHandler={this.addFoodHandler}
+                            removeHandler={this.removeFoodHandler}
+                        />
                     </div>
                 );
             });
 
             widgetContent = (
-                <div>
+                <React.Fragment>
                     <Button 
                         btntype="Success" 
                         clicked={() => this.addFoodHandler()}>Add Food</Button>
                     {meals}
-                </div>
+                </React.Fragment>
             );
         }
 
@@ -71,8 +68,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onFetchFoods: (id) => dispatch(foodActions.fetchFoods(id)),
         onAddFoodInit: (mealType) => dispatch(foodActions.addFoodInit(mealType)),
-        onFetchFoods: (id) => dispatch(foodActions.fetchFoods(id))
+        onRemoveFoodSubmit: (id, mealType, foodIndex) => dispatch(foodActions.removeFoodSubmit(id, mealType, foodIndex))
     };
 };
 

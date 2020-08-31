@@ -27,6 +27,8 @@ const fetchFoodsSuccess = (state, action) => {
         };
     }
 
+    console.log("[fetchFoodsSuccess]", action.foods);
+
     return {
         ...state,
         foods: action.foods
@@ -55,11 +57,24 @@ const addFoodSuccess = (state, action) => {
     };
 };
 
+const removeFoodSuccess = (state, action) => {
+    const updatedMeals = { ...state.foods };
+    const updatedMeal = { ...updatedMeals[action.id] };
+    const updatedFoods = updatedMeal[action.mealType].filter((result, index) => index !== action.foodIndex);
+    updatedMeals[action.id][action.mealType] = updatedFoods;
+    console.log("[removeFoodSuccess]", updatedMeals);
+    return {
+        ...state,
+        foods: updatedMeals
+    };
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_FOODS_SUCCESS: return fetchFoodsSuccess(state, action);
         case actionTypes.ADD_FOOD_INIT: return addFoodInit(state, action);
         case actionTypes.ADD_FOOD_SUCCESS: return addFoodSuccess(state, action);
+        case actionTypes.REMOVE_FOOD_SUCCESS: return removeFoodSuccess(state, action);
         default: return state;
     }
 };

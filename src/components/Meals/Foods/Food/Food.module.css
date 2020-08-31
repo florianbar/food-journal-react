@@ -1,0 +1,13 @@
+.Food {
+    display: inline-block;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin-right: 6px;
+    padding: 4px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+
+.FoodName {
+    margin-right: 5px;
+}
