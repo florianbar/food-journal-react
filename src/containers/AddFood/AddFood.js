@@ -29,8 +29,8 @@ class AddFood extends Component {
 
     formSubmitHandler = (event) => {
         event.preventDefault();
-
-        this.props.onAddFoodSubmit(this.state.form.mealType.value, this.state.form.food.value);
+        
+        this.props.onAddFoodSubmit(this.props.dateStamp, this.state.form.mealType.value, this.state.form.food.value);
     }
 
     inputChangedHandler = (event, inputName) => {
@@ -60,7 +60,7 @@ class AddFood extends Component {
 
         return (
             <React.Fragment>
-                { this.props.canAddFood ? <Redirect to="/" /> : null }
+                { this.props.canAddFood ? null : <Redirect to="/" /> }
 
                 <form onSubmit={this.formSubmitHandler}>
                     <h1>Add Food</h1>
@@ -87,13 +87,14 @@ class AddFood extends Component {
 
 const mapStateToProps = state => {
     return {
+        dateStamp: state.day.todayDateStamp,
         canAddFood: state.food.canAddFood
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddFoodSubmit: (mealType, foodDescription) => dispatch(actions.addFoodSuccess(mealType, foodDescription))
+        onAddFoodSubmit: (id, mealType, foodDescription) => dispatch(actions.addFoodSubmit(id, mealType, foodDescription))
     };
 };
 

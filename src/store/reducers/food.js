@@ -1,16 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    // meals: {
-    //     breakfast: ["Eggs"],
-    //     morningSnack: ["Whey Protein"],
-    //     lunch: ["Tuna"],
-    //     afternoonSnack: ["Whey Protein"],
-    //     dinner: ["Chicken Stir Fry"],
-    //     eveningSnack: ["Ice Cream"]
-    // },
     foods: null,
-    canAddFood: false
+    canAddFood: true
 };
 
 const initialFoods = {
@@ -40,19 +32,25 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_FOOD_INIT:
             return {
                 ...state,
-                canAddFood: false
+                canAddFood: true
             };
 
         case actionTypes.ADD_FOOD_SUCCESS:
-            const updatedMeals = {...state.meals};
-            const updatedMeal = [...state.meals[action.mealType]];
-            updatedMeal.push(action.foodDescription);
-            updatedMeals[action.mealType] = updatedMeal;
+            const updatedMeals = { ...state.foods };
+            const updatedMeal = { ...updatedMeals[action.id] };
 
+            if (updatedMeal[action.mealType]) {
+                const updatedFoods = [ ...updatedMeal[action.mealType] ];
+                updatedFoods.push(action.foodDescription);
+                updatedMeal[action.mealType] = updatedFoods;
+            } else {
+                updatedMeal[action.mealType] = [action.foodDescription];
+            }
+            
             return {
                 ...state,
-                meals: updatedMeals,
-                canAddFood: true
+                foods: updatedMeals,
+                canAddFood: false
             };
             
         default:
