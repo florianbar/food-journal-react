@@ -21,14 +21,9 @@ export const addFoodSubmit = (id, mealType, foodDescription) => {
         const state = getState();
         const updatedMeals = { ...state.food.foods };
         const updatedMeal = { ...updatedMeals[id] };
-
-        if (updatedMeal[mealType]) {
-            const updatedFoods = [ ...updatedMeal[mealType] ];
-            updatedFoods.push(foodDescription);
-            updatedMeal[mealType] = updatedFoods;
-        } else {
-            updatedMeal[mealType] = [foodDescription];
-        }
+        const updatedFoods = [ ...updatedMeal[mealType] ];
+        updatedFoods.push(foodDescription);
+        updatedMeal[mealType] = updatedFoods;
         
         axios.patch("/foods.json", { [id]: updatedMeal })
             .then(response => {
@@ -38,18 +33,19 @@ export const addFoodSubmit = (id, mealType, foodDescription) => {
     };
 };
 
-const fetchFoodsSuccess = (foods) => {
+const fetchFoodsSuccess = (id, foods) => {
     return {
         type: actionTypes.FETCH_FOODS_SUCCESS,
+        id: id,
         foods: foods
     }
 };
 
-export const fetchFoods = () => {
+export const fetchFoods = (id) => {
     return dispatch => {
         axios.get("/foods.json")
             .then(response => {
-                dispatch(fetchFoodsSuccess(response.data));
+                dispatch(fetchFoodsSuccess(id, response.data));
             })
             .catch(error => {});
     };

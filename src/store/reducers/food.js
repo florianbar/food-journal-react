@@ -5,56 +5,56 @@ const initialState = {
     canAddFood: true
 };
 
-const initialFoods = {
-    breakfast: [],
-    morningSnack: [],
-    lunch: [],
-    afternoonSnack: [],
-    dinner: [],
-    eveningSnack: []
+const fetchFoodsSuccess = (state, action) => {
+    // If today's foods don't exist yet, create it
+    if (!action.foods[action.id]) {
+        action.foods[action.id] = {};
+    }
+
+    for (let id in action.foods) {
+        action.foods[id] = {
+            breakfast: action.foods[id]["breakfast"] || [],
+            morningSnack: action.foods[id]["morningSnack"] || [],
+            lunch: action.foods[id]["lunch"] || [],
+            afternoonSnack: action.foods[id]["afternoonSnack"] || [],
+            dinner: action.foods[id]["dinner"] || [],
+            eveningSnack: action.foods[id]["eveningSnack"] || []
+        };
+    }
+
+    return {
+        ...state,
+        foods: action.foods
+    };
+}
+
+const addFoodInit = (state, action) => {
+    return {
+        ...state,
+        canAddFood: true
+    };
+};
+
+const addFoodSuccess = (state, action) => {
+    const updatedMeals = { ...state.foods };
+    const updatedMeal = { ...updatedMeals[action.id] };
+    const updatedFoods = [ ...updatedMeal[action.mealType] ];
+    updatedFoods.push(action.foodDescription);
+    updatedMeal[action.mealType] = updatedFoods;
+
+    return {
+        ...state,
+        foods: updatedMeals,
+        canAddFood: false
+    };
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_FOODS_SUCCESS:
-            const upodatedFoods = {...action.foods};
-            const today = new Date();
-            const dateStamp = today.toDateString();
-            // if today's foods don't exist, create empty foods
-            if (!upodatedFoods[dateStamp]) {
-                upodatedFoods[dateStamp] = {...initialFoods};
-            }
-            return {
-                ...state,
-                foods: upodatedFoods
-            };
-
-        case actionTypes.ADD_FOOD_INIT:
-            return {
-                ...state,
-                canAddFood: true
-            };
-
-        case actionTypes.ADD_FOOD_SUCCESS:
-            const updatedMeals = { ...state.foods };
-            const updatedMeal = { ...updatedMeals[action.id] };
-
-            if (updatedMeal[action.mealType]) {
-                const updatedFoods = [ ...updatedMeal[action.mealType] ];
-                updatedFoods.push(action.foodDescription);
-                updatedMeal[action.mealType] = updatedFoods;
-            } else {
-                updatedMeal[action.mealType] = [action.foodDescription];
-            }
-            
-            return {
-                ...state,
-                foods: updatedMeals,
-                canAddFood: false
-            };
-            
-        default:
-            return state;
+        case actionTypes.FETCH_FOODS_SUCCESS: return fetchFoodsSuccess(state, action);
+        case actionTypes.ADD_FOOD_INIT: return addFoodInit(state, action);
+        case actionTypes.ADD_FOOD_SUCCESS: return addFoodSuccess(state, action);
+        default: return state;
     }
 };
 

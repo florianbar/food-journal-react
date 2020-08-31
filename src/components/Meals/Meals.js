@@ -9,7 +9,7 @@ import Button from '../UI/Button/Button';
 
 class Meals extends Component {
     componentDidMount () {
-        this.props.onFetchFoods();
+        this.props.onFetchFoods(this.props.dateStamp);
     }
 
     render () {
@@ -57,7 +57,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchFoods: () => dispatch(foodActions.fetchFoods())
+        onFetchFoods: (id) => dispatch(foodActions.fetchFoods(id))
     };
 };
 
