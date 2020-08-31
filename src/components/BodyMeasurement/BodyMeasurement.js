@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as bodyMeasurementActions from '../../store/actions/actionCreators/bodyMeasurement';
+import * as bodyMeasurementActions from '../../store/actions/bodyMeasurement';
 
 import Widget from '../UI/Widget/Widget';
 import Button from '../UI/Button/Button';

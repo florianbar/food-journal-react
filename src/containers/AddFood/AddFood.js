@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/actionCreators/food';
+import * as actions from '../../store/actions/food';
 
 import Button from '../../components/UI/Button/Button';
 

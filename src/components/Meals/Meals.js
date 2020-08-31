@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as foodActions from '../../store/actions/actionCreators/food';
+import * as foodActions from '../../store/actions/food';
 
 import classes from './Meals.module.css';
 import Widget from '../UI/Widget/Widget';
