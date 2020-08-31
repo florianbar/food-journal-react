@@ -11,6 +11,10 @@
     font-weight: bold;
 }
 
+.Button.sm {
+    font-size: 12px;
+}
+
 .Button:first-of-type {
     margin-left: 0;
     padding-left: 0;

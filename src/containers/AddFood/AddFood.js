@@ -27,9 +27,22 @@ class AddFood extends Component {
         }
     }
 
+    componentDidMount () {
+        if (this.props.selectedMealType) {
+            const updatedForm = {...this.state.form};
+            const updatedMealTypes = {...updatedForm.mealType};
+            updatedMealTypes.value = this.props.selectedMealType;
+            updatedForm.mealType = updatedMealTypes;
+            this.setState({ form: updatedForm });
+        }
+    }
+
+    backButtonHandler = () => {
+        this.props.history.push("/");
+    }
+
     formSubmitHandler = (event) => {
         event.preventDefault();
-        
         this.props.onAddFoodSubmit(this.props.dateStamp, this.state.form.mealType.value, this.state.form.food.value);
     }
 
@@ -51,10 +64,7 @@ class AddFood extends Component {
             return (
                 <option 
                     key={meal.value}
-                    value={meal.value}
-                >
-                    {meal.name}
-                </option>
+                    value={meal.value}>{meal.name}</option>
             );
         });
 
@@ -62,11 +72,17 @@ class AddFood extends Component {
             <React.Fragment>
                 { this.props.canAddFood ? null : <Redirect to="/" /> }
 
+                <Button 
+                    btntype="Danger" 
+                    clicked={this.backButtonHandler}>Back</Button>
+
                 <form onSubmit={this.formSubmitHandler}>
                     <h1>Add Food</h1>
 
                     <label>Meal Type:</label>
-                    <select onChange={(event) => this.inputChangedHandler(event, "mealType")}>
+                    <select 
+                        value={this.state.form.mealType.value} 
+                        onChange={(event) => this.inputChangedHandler(event, "mealType")}>
                         {mealTypes}
                     </select>
 
@@ -78,7 +94,7 @@ class AddFood extends Component {
                         value={this.state.form.food.value}
                         onChange={(event) => this.inputChangedHandler(event, "food")} />
 
-                    <Button btnType="Success">Submit</Button>
+                    <Button btntype="Success">Submit</Button>
                 </form>
             </React.Fragment>
         );
@@ -88,6 +104,7 @@ class AddFood extends Component {
 const mapStateToProps = state => {
     return {
         dateStamp: state.day.todayDateStamp,
+        selectedMealType: state.food.selectedMealType,
         canAddFood: state.food.canAddFood
     };
 };

@@ -2,10 +2,15 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     foods: null,
+    selectedMealType: null,
     canAddFood: true
 };
 
 const fetchFoodsSuccess = (state, action) => {
+    if (!action.foods) {
+        action.foods = {};
+    }
+
     // If today's foods don't exist yet, create it
     if (!action.foods[action.id]) {
         action.foods[action.id] = {};
@@ -31,6 +36,7 @@ const fetchFoodsSuccess = (state, action) => {
 const addFoodInit = (state, action) => {
     return {
         ...state,
+        selectedMealType: action.selectedMealType,
         canAddFood: true
     };
 };

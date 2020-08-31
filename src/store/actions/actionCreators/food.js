@@ -1,9 +1,10 @@
 import * as actionTypes from '../actionTypes';
 import axios from '../../../axios-food-journal';
 
-export const addFoodInit = () => {
+export const addFoodInit = (mealType) => {
     return {
-        type: actionTypes.ADD_FOOD_INIT
+        type: actionTypes.ADD_FOOD_INIT,
+        selectedMealType: mealType
     };
 };
 

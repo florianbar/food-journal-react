@@ -34,6 +34,10 @@ class AddMeasurement extends Component {
         }
     }
 
+    backButtonHandler = () => {
+        this.props.history.push("/");
+    }
+
     formSubmitHandler = (event) => {
         event.preventDefault();
 
@@ -63,25 +67,31 @@ class AddMeasurement extends Component {
         
         if (this.props.measurements && this.props.measurements[this.props.dateStamp]) {
             form = (
-                <form onSubmit={this.formSubmitHandler}>
-                    <h1>Add Measurements</h1>
+                <div>
+                    <Button 
+                        btntype="Danger" 
+                        clicked={this.backButtonHandler}>Back</Button>
 
-                    <label>Weight:</label>
-                    <input 
-                        type="number" 
-                        name="weight" 
-                        value={this.state.form.weight.value}
-                        onChange={(event) => this.inputChangedHandler(event, "weight")} />
+                    <form onSubmit={this.formSubmitHandler}>
+                        <h1>Add Measurement</h1>
 
-                    <label>Body Fat:</label>
-                    <input 
-                        type="number" 
-                        name="bodyFat" 
-                        value={this.state.form.bodyFat.value}
-                        onChange={(event) => this.inputChangedHandler(event, "bodyFat")} />
+                        <label>Weight:</label>
+                        <input 
+                            type="number" 
+                            name="weight" 
+                            value={this.state.form.weight.value}
+                            onChange={(event) => this.inputChangedHandler(event, "weight")} />
 
-                    <Button btnType="Success">Submit</Button>
-                </form>
+                        <label>Body Fat:</label>
+                        <input 
+                            type="number" 
+                            name="bodyFat" 
+                            value={this.state.form.bodyFat.value}
+                            onChange={(event) => this.inputChangedHandler(event, "bodyFat")} />
+
+                        <Button btntype="Success">Submit</Button>
+                    </form>
+                </div>
             );
         }
 

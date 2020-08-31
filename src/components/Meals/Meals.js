@@ -12,20 +12,34 @@ class Meals extends Component {
         this.props.onFetchFoods(this.props.dateStamp);
     }
 
+    addFoodHandler = (mealType) => {
+        this.props.onAddFoodInit(mealType);
+        this.props.history.push("/add-food");
+    }
+
     render () {
         let widgetContent = <div>Loading...</div>;
 
         if (this.props.foods && this.props.foods[this.props.dateStamp]) {
             const foods = this.props.foods[this.props.dateStamp];
-            const meals = Object.keys(foods).map(meal => {
-                const mealFoods = foods[meal].map(food => {
-                    return <span className={classes.Food}>{food}</span>;
+            const meals = Object.keys(foods).map(mealType => {
+                const mealFoods = foods[mealType].map((food, index) => {
+                    return (
+                        <span 
+                            key={index} 
+                            className={classes.Food}>{food}</span>
+                    );
                 });
     
                 return (
-                    <div className={classes.Meal}>
-                        <label>{meal}:</label>
+                    <div key={mealType} className={classes.Meal}>
+                        <label>{mealType}:</label>
                         <span className={classes.Foods}>{mealFoods}</span>
+                        <Button 
+                            btntype="Success" 
+                            btnsize="sm" 
+                            style={{display: "inline-block"}}
+                            clicked={() => this.addFoodHandler(mealType)}>+ Add</Button>
                     </div>
                 );
             });
@@ -33,8 +47,8 @@ class Meals extends Component {
             widgetContent = (
                 <div>
                     <Button 
-                        btnType="Success" 
-                        clicked={this.props.clicked}>Add Food</Button>
+                        btntype="Success" 
+                        clicked={() => this.addFoodHandler()}>Add Food</Button>
                     {meals}
                 </div>
             );
@@ -57,6 +71,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onAddFoodInit: (mealType) => dispatch(foodActions.addFoodInit(mealType)),
         onFetchFoods: (id) => dispatch(foodActions.fetchFoods(id))
     };
 };

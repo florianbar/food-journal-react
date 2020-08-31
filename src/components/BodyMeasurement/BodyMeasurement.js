@@ -11,6 +11,11 @@ class BodyMeasurement extends Component {
         this.props.onFetchMeasurements(this.props.dateStamp);
     }
 
+    addMeasurementsHandler = () => {
+        this.props.onBodyMeasurementsInit();
+        this.props.history.push("/add-measurement");
+    }
+
     render () {
         let widgetContent = <div>Loading...</div>;
 
@@ -18,8 +23,8 @@ class BodyMeasurement extends Component {
             widgetContent = (
                 <div>
                     <Button 
-                        btnType="Success"
-                        clicked={this.props.clicked}>Record Measurements</Button>
+                        btntype="Success"
+                        clicked={this.addMeasurementsHandler}>Add Measurement</Button>
                     <p>
                         <b>Weight:</b> {this.props.measurements[this.props.dateStamp].weight}kg
                     </p>
@@ -47,6 +52,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onBodyMeasurementsInit: () => dispatch(bodyMeasurementActions.bodyMeasurementInit()),
         onFetchMeasurements: (id) => dispatch(bodyMeasurementActions.fetchMeasurements(id))
     };
 };
