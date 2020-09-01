@@ -69,27 +69,44 @@ class AddMeasurement extends Component {
             form = (
                 <div>
                     <Button 
-                        btntype="Danger" 
+                        btntype="secondary" 
+                        btnsize="sm" 
                         clicked={this.backButtonHandler}>Back</Button>
 
                     <form onSubmit={this.formSubmitHandler}>
                         <h1>Add Measurement</h1>
 
-                        <label>Weight:</label>
-                        <input 
-                            type="number" 
-                            name="weight" 
-                            value={this.state.form.weight.value}
-                            onChange={(event) => this.inputChangedHandler(event, "weight")} />
+                        <div className="form-group">
+                            <label for="exampleInputEmail1">Weight</label>
+                            <div className="input-group mb-3">
+                                <input 
+                                    className="form-control"
+                                    type="number" 
+                                    name="weight" 
+                                    value={this.state.form.weight.value}
+                                    onChange={(event) => this.inputChangedHandler(event, "weight")} />
+                                <div className="input-group-append">
+                                    <span className="input-group-text" id="basic-addon2">kg</span>
+                                </div>
+                            </div>
+                        </div>
 
-                        <label>Body Fat:</label>
-                        <input 
-                            type="number" 
-                            name="bodyFat" 
-                            value={this.state.form.bodyFat.value}
-                            onChange={(event) => this.inputChangedHandler(event, "bodyFat")} />
+                        <div className="form-group">
+                            <label for="exampleInputEmail1">Body Fat</label>
+                            <div className="input-group mb-3">
+                                <input 
+                                    className="form-control"
+                                    type="number" 
+                                    name="bodyFat" 
+                                    value={this.state.form.bodyFat.value}
+                                    onChange={(event) => this.inputChangedHandler(event, "bodyFat")} />
+                                <div className="input-group-append">
+                                    <span className="input-group-text" id="basic-addon2">%</span>
+                                </div>
+                            </div>
+                        </div>                        
 
-                        <Button btntype="Success">Submit</Button>
+                        <Button>Submit</Button>
                     </form>
                 </div>
             );

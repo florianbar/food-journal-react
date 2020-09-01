@@ -10,8 +10,8 @@ const food = (props) => {
                 {props.name}
             </span>
             <Button 
-                btntype="Danger" 
-                btnsize="xs"
+                btntype="light" 
+                btnsize="sm"
                 style={{display: "inline-block"}}
                 clicked={props.removeHandler}>x</Button>
         </div>

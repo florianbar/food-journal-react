@@ -5,7 +5,6 @@ import * as foodActions from '../../store/actions/food';
 
 import classes from './Meals.module.css';
 import Widget from '../UI/Widget/Widget';
-import Button from '../UI/Button/Button';
 import Foods from './Foods/Foods';
 
 class Meals extends Component {
@@ -43,16 +42,16 @@ class Meals extends Component {
 
             widgetContent = (
                 <React.Fragment>
-                    <Button 
-                        btntype="Success" 
-                        clicked={() => this.addFoodHandler()}>Add Food</Button>
                     {meals}
                 </React.Fragment>
             );
         }
 
         return (
-            <Widget title="Today's Meals">
+            <Widget 
+                title="Today's Meals" 
+                btnTitle="Add" 
+                btnClicked={() => this.addFoodHandler()}>
                 {widgetContent}
             </Widget>
         );

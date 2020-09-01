@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as bodyMeasurementActions from '../../store/actions/bodyMeasurement';
 
 import Widget from '../UI/Widget/Widget';
-import Button from '../UI/Button/Button';
 
 class BodyMeasurement extends Component {
     componentDidMount () {
@@ -22,9 +21,6 @@ class BodyMeasurement extends Component {
         if (this.props.measurements && this.props.measurements[this.props.dateStamp]) {
             widgetContent = (
                 <div>
-                    <Button 
-                        btntype="Success"
-                        clicked={this.addMeasurementsHandler}>Add Measurement</Button>
                     <p>
                         <b>Weight:</b> {this.props.measurements[this.props.dateStamp].weight}kg
                     </p>
@@ -36,7 +32,10 @@ class BodyMeasurement extends Component {
         }
 
         return (
-            <Widget title="Body Measurements">
+            <Widget 
+                title="Body Measurements" 
+                btnTitle="Update"
+                btnClicked={this.addMeasurementsHandler}>
                 {widgetContent}
             </Widget>
         );

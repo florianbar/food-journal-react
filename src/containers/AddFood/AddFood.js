@@ -73,28 +73,35 @@ class AddFood extends Component {
                 { this.props.canAddFood ? null : <Redirect to="/" /> }
 
                 <Button 
-                    btntype="Danger" 
+                    btntype="secondary"
+                    btnsize="sm" 
                     clicked={this.backButtonHandler}>Back</Button>
 
                 <form onSubmit={this.formSubmitHandler}>
-                    <h1>Add Food</h1>
+                    <h2>Add Food</h2>
 
-                    <label>Meal Type:</label>
-                    <select 
-                        value={this.state.form.mealType.value} 
-                        onChange={(event) => this.inputChangedHandler(event, "mealType")}>
-                        {mealTypes}
-                    </select>
+                    <div className="form-group">
+                        <label for="exampleInputEmail1">Meal Type</label>
+                        <select 
+                            className="form-control"
+                            value={this.state.form.mealType.value} 
+                            onChange={(event) => this.inputChangedHandler(event, "mealType")}>
+                            {mealTypes}
+                        </select>
+                    </div> 
 
-                    <label>Food Description:</label>
-                    <input 
-                        type="text" 
-                        name="food" 
-                        placeholder="Chicken Stir Fry..." 
-                        value={this.state.form.food.value}
-                        onChange={(event) => this.inputChangedHandler(event, "food")} />
+                    <div className="form-group">
+                        <label for="exampleInputEmail1">Food Description</label>
+                        <input 
+                            className="form-control"
+                            type="text" 
+                            name="food" 
+                            placeholder="Chicken Stir Fry..." 
+                            value={this.state.form.food.value}
+                            onChange={(event) => this.inputChangedHandler(event, "food")} />
+                    </div>                    
 
-                    <Button btntype="Success">Submit</Button>
+                    <Button>Submit</Button>
                 </form>
             </React.Fragment>
         );

@@ -21,11 +21,10 @@ const foods = (props) => {
                 {foods}
             </span>
             <Button 
-                btntype="Success" 
-                btnsize="xs" 
+                btnsize="sm" 
                 style={{display: "inline-block"}}
                 clicked={() => props.addHandler(props.meal)}
-            >+ Add</Button>
+            >+</Button>
         </div>
     );
 };
